@@ -37,9 +37,17 @@ public class Todo {
 
     private LocalDateTime createdAt;
 
-    public Todo(String title, String content, LocalDateTime createdAt) {
+    public Todo(String title, String content) {
         this.title = title;
         this.content = content;
         this.createdAt = LocalDateTime.now();
     }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+
+
 }
