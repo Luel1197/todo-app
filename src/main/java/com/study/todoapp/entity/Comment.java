@@ -10,6 +10,7 @@ import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.sql.Update;
 
 @Entity
 @Getter
@@ -34,5 +35,14 @@ public class Comment {
 
     private LocalDateTime createdAt;
 
+    public Comment(String comment, User user, Todo todo) {
+        this.comment = comment;
+        this.user = user;
+        this.todo = todo;
+        this.createdAt = LocalDateTime.now();
+    }
 
+    public void Update(String comment) {
+        this.comment = comment;
+    }
 }
