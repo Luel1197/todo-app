@@ -17,6 +17,7 @@ public class UserContorller {
 
     private final UserService userService;
 
+    // 회원가입
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody SignupRequestDto requestDto) {
         Long id = userService.signup(requestDto);

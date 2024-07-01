@@ -48,13 +48,12 @@ public class JwtUtil {
         key = Keys.hmacShaKeyFor(bytes);
     }
 
-    public String createToken(String username, UserRoleEnum role, String info) {
+    public String createToken(String username, UserRoleEnum role) {
 
         Date date = new Date();
 
         return BEARER_PREFIX + Jwts.builder().setSubject(username)
             .claim(AUTHORIZATION_KEY, role)
-            .claim("info", info)
             .setExpiration(new Date(date.getTime() + TOKEN_TIME))
             .setIssuedAt(date)
             .signWith(key, signatureAlgorithm)
@@ -108,6 +107,6 @@ public class JwtUtil {
 
     // 사용자에게서 토큰 가져오기
     public String getTokenFromRequest(HttpServletRequest req) {
-        return req.getHeader(AUTHORIZATION_HEADER);
+        return getTokenFromRequest(req, AUTHORIZATION_HEADER);
     }
 }

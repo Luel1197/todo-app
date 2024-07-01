@@ -6,6 +6,7 @@ import com.study.todoapp.enums.UserRoleEnum;
 import com.study.todoapp.repository.UserRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,13 +14,14 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // 어드민 토큰
     private final  String ADMIN_TOKEN = "어드민테스트";
 
     public Long signup(SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
-        String password = requestDto.getPassword();
+        String password = passwordEncoder.encode(requestDto.getPassword());
 
         Optional<User> optionalUser = userRepository.findByUsername(username);
 
@@ -36,7 +38,7 @@ public class UserService {
             role = UserRoleEnum.ADMIN;
         }
 
-        User user = new User(requestDto.getUsername(), requestDto.getPassword(),
+        User user = new User(username, password,
             requestDto.getName(), role);
 
         userRepository.save(user);
